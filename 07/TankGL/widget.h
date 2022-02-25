@@ -43,7 +43,6 @@ protected:
     void updateBullet();
     void updateEnemy();
     int loadGLTextures();
-    GLuint bindTexture(QImage);
 
     GLuint  filter;             // Which Filter To Use
     GLuint  texture[4];         // Storage For 3 Textures
@@ -61,9 +60,6 @@ protected:
     float lastMove, newMove;
 
     enemy normalEnemy;
-    //enemy *headE;
-    //enemy *tailE;
-    //enemy *currentE;
 
     GLUquadricObj *quadratic;
 
@@ -74,7 +70,6 @@ private:
     void paintGL();
     void resizeGL(int w, int h);
 
-    void mousePressEvent(QMouseEvent *);
     void keyPressEvent(QKeyEvent *);
 
 private slots:

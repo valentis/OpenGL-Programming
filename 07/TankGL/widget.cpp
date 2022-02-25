@@ -1,7 +1,6 @@
 #include <cmath>           // Header File For Windows Math Library
 #include <cstdio>          // Header File For Standard Input/Output
 #include <cstdarg>
-#include <cstdlib>          // for rand() and srand()
 #include <QRandomGenerator>
 
 #include "widget.h"
@@ -38,7 +37,6 @@ int Widget::loadGLTextures()            // Load Bitmaps And Convert To Textures
 
     QImage* image1 = new QImage("barrel.bmp");
     GLubyte *data1 = image1->bits( );
-    //    texture[0] = bindTexture(image1);
 
     glGenTextures(1, &texture[0]);                  // Create Three Textures
     gluBuild2DMipmaps(GL_TEXTURE_2D, 3, image1->size().width(),
@@ -104,17 +102,6 @@ int Widget::loadGLTextures()            // Load Bitmaps And Convert To Textures
     Status = true;                                    // Set The Status To TRUE
 
     return Status;                                      // Return The Status
-}
-
-GLuint Widget::bindTexture(QImage img)
-{
-    GLuint textureId = -1;
-    GLubyte *data = img.bits( );
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img.width( ), img.height( ),
-                 0, GL_BGRA_EXT, GL_UNSIGNED_BYTE, data);
-
-    return textureId;
 }
 
 void Widget::initializeGL()
@@ -326,15 +313,6 @@ void Widget::paintGL( )
     glFlush();
 }
 
-void Widget::mousePressEvent(QMouseEvent *ev)
-{
-    int x, y;
-    x = ev->position().x();
-    y = ev->position().y();
-
-    update();
-}
-
 void Widget::keyPressEvent(QKeyEvent *ev)
 {
     switch(ev->key()) {
@@ -394,7 +372,7 @@ void Widget::updateTimer()
         //set the values for the enemy portion of the code
         normalEnemy.ypos = 2.5;
         normalEnemy.speed = .02;
-        normalEnemy.xpos = -22+rand()%(45);
+        normalEnemy.xpos = -22+(QRandomGenerator::global( )->generate( )%45);
         normalEnemy.xpos = normalEnemy.xpos*.1;
         enemyAround = true;
     }
